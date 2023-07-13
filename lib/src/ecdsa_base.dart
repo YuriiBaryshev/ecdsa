@@ -85,4 +85,39 @@ class ECDSA {
     }
     return output;
   }
+
+
+  ///Verifies signature in the following format
+  ///```
+  ///{"r": ...,
+  ///"s": ...
+  ///}
+  ///```
+  bool verify(Uint8List message, Map<String, BigInt> signature, [ECPoint? usedPublicKey]) {
+    if((signature["r"] == null) || (signature["s"] == null)) {
+      throw ArgumentError("Unknown signature format, it must have 'r' and 's' fields");
+    }
+
+    if((signature["r"]! >= ellipticCurveFacade.curve.n) || (signature["s"]! >= ellipticCurveFacade.curve.n)) {
+      throw ArgumentError("Signature was created for other elliptic curve");
+    }
+
+    usedPublicKey ??= publicKey;
+    if(!ellipticCurveFacade.isOnCurve(usedPublicKey)) {
+      throw ArgumentError("Provided public key doesn't belong to the curve");
+    }
+
+    Uint8List hashValue = _hashFunction.process(message);
+    BigInt e = _uint8ListToBigInt(hashValue);
+
+    BigInt sInv = signature["s"]!.modInverse(ellipticCurveFacade.curve.n);
+    BigInt u = (e * sInv) % ellipticCurveFacade.curve.n;
+    BigInt v = (signature["r"]! * sInv) % ellipticCurveFacade.curve.n;
+    ECPoint R1 = ellipticCurveFacade.addPoint(
+        ellipticCurveFacade.mulScalar(ellipticCurveFacade.getG(), u),
+        ellipticCurveFacade.mulScalar(usedPublicKey, v)
+    );
+    BigInt r1 = R1.x % ellipticCurveFacade.curve.n;
+    return r1 == signature["r"]!;
+  }
 }
