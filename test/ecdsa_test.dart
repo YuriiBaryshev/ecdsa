@@ -32,6 +32,10 @@ void main() {
       expect(ecdsa.verify(modifiedMessage, signature), isFalse);
     });
 
-
+    test('fails verification of another public key', () {
+      ECDSA anotherEcdsa = ECDSA();
+      var signature = ecdsa.sign(message);
+      expect(ecdsa.verify(message, signature, anotherEcdsa.publicKey), isFalse);
+    });
   });
 }
