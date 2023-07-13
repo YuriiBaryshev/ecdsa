@@ -98,6 +98,10 @@ class ECDSA {
       throw ArgumentError("Unknown signature format, it must have 'r' and 's' fields");
     }
 
+    if((signature["r"]! == BigInt.zero) || (signature["s"]! == BigInt.zero)) {
+      throw ArgumentError("Signature cannot posses zero value parameters");
+    }
+
     if((signature["r"]! >= ellipticCurveFacade.curve.n) || (signature["s"]! >= ellipticCurveFacade.curve.n)) {
       throw ArgumentError("Signature was created for other elliptic curve");
     }
