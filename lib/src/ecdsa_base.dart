@@ -1,17 +1,20 @@
 import 'package:elliptic_curves_facade/elliptic_curves_facade.dart';
 import 'package:elliptic/elliptic.dart';
 import 'dart:math';
+import 'package:pointycastle/pointycastle.dart' show Digest;
 
-/// ECDSA implementation
+/// ECDSA implementation with secp256k1 and SHA3-256 by default
 class ECDSA {
   late EllipticCurveFacade ellipticCurveFacade;
   late BigInt _privateKey;
   late ECPoint publicKey;
+  late Digest _hashFunction;
 
-  ECDSA([EllipticCurve? curve]) {
+  ECDSA([EllipticCurve? curve, Digest? hashFunction]) {
     curve ??= getSecp256k1() as EllipticCurve;
     ellipticCurveFacade = EllipticCurveFacade(curve);
     generateKeyPair();
+    _hashFunction = hashFunction ?? Digest("SHA3-256");
   }
 
   ///Generate key pair

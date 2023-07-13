@@ -9,6 +9,7 @@ dependencies:
   elliptic_curves_facade:
     git: https://github.com/YuriiBaryshev/elliptic_curves_facade.git
   elliptic: ^0.3.8
+  pointycastle: ^3.7.3
 
 dev_dependencies:
   lints: ^2.0.0
