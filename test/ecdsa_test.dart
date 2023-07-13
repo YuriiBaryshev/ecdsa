@@ -8,11 +8,6 @@ void main() {
   group('ECDSA tests', () {
     ECDSA ecdsa = ECDSA();
     Uint8List message = Uint8List.fromList([0, 1, 2, 3 , 42]);
-    
-
-    setUp(() {
-      // Additional setup goes here.
-    });
 
     test('Secp256k1 is set default', () {
       expect(ecdsa.ellipticCurveFacade.curve, getSecp256k1());
