@@ -37,5 +37,13 @@ void main() {
       var signature = ecdsa.sign(message);
       expect(ecdsa.verify(message, signature, anotherEcdsa.publicKey), isFalse);
     });
+
+    test('throws on verification of public key from the other curve', () {
+      ECDSA anotherEcdsa = ECDSA(getP256());
+      var signature = ecdsa.sign(message);
+      expect(() {
+        ecdsa.verify(message, signature, anotherEcdsa.publicKey);
+      }, throwsArgumentError);
+    });
   });
 }
