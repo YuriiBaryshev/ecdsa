@@ -24,5 +24,14 @@ void main() {
         expect(ecdsa.verify(message, signature), isTrue);
       }
     });
+
+    test('fails verification of modified message', () {
+      var signature = ecdsa.sign(message);
+      Uint8List modifiedMessage = message;
+      modifiedMessage[0]++;
+      expect(ecdsa.verify(modifiedMessage, signature), isFalse);
+    });
+
+
   });
 }
