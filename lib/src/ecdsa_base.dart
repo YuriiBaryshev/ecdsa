@@ -6,21 +6,32 @@ import 'dart:math';
 class ECDSA {
   late EllipticCurveFacade ellipticCurveFacade;
   late BigInt _privateKey;
+  late ECPoint publicKey;
 
   ECDSA([EllipticCurve? curve]) {
     curve ??= getSecp256k1() as EllipticCurve;
     ellipticCurveFacade = EllipticCurveFacade(curve);
-    generatePrivateKey();
+    generateKeyPair();
   }
 
-  ///Generate private key
-  void generatePrivateKey() {
+  ///Generate key pair
+  void generateKeyPair() {
+    _privateKey = _generateSecret();
+    publicKey = ellipticCurveFacade.mulScalar(ellipticCurveFacade.getG(), _privateKey);
+  }
+
+  ///Generates secret
+  BigInt _generateSecret() {
     int length = ellipticCurveFacade.curve.n.bitLength >> 3;
     Random generator = Random.secure();
-    _privateKey = BigInt.zero;
+    BigInt secret = BigInt.zero;
     for(int i = 0; i < length; i++) {
-      _privateKey = (_privateKey << 8) + BigInt.from(generator.nextInt(256));
+      secret = (secret << 8) + BigInt.from(generator.nextInt(256));
     }
-    _privateKey = _privateKey % ellipticCurveFacade.curve.n;
+    secret = secret % ellipticCurveFacade.curve.n;
+    if(secret == BigInt.zero) {
+      secret = _generateSecret();
+    }
+    return secret;
   }
 }
