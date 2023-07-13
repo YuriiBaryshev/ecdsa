@@ -71,7 +71,7 @@ class ECDSA {
     ECPoint R = ellipticCurveFacade.mulScalar(ellipticCurveFacade.getG(), k);
 
     BigInt r = R.x % ellipticCurveFacade.curve.n;
-    BigInt s = kInv * (e + (r * k) % ellipticCurveFacade.curve.n)
+    BigInt s = (kInv * (e + (r * _privateKey) % ellipticCurveFacade.curve.n))
         % ellipticCurveFacade.curve.n;
 
     k = BigInt.zero;
