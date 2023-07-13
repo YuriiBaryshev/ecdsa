@@ -45,5 +45,24 @@ void main() {
         ecdsa.verify(message, signature, anotherEcdsa.publicKey);
       }, throwsArgumentError);
     });
+
+    test('throws on verification of incorrect signature format', () {
+      var signature = ecdsa.sign(message);
+      Map<String, BigInt> wrongSignature1 = {
+        "s" : signature["s"]!,
+        "a" : BigInt.zero
+      };
+      expect(() {
+        ecdsa.verify(message, wrongSignature1);
+      }, throwsArgumentError);
+
+      Map<String, BigInt> wrongSignature2 = {
+        "r" : signature["r"]!,
+        "a" : BigInt.zero
+      };
+      expect(() {
+        ecdsa.verify(message, wrongSignature2);
+      }, throwsArgumentError);
+    });
   });
 }
