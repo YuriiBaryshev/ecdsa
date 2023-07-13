@@ -1,8 +1,4 @@
-/// Support for doing something awesome.
-///
-/// More dartdocs go here.
+/// Implements ECDSA with elliptic_curves_facade
 library ecdsa;
 
 export 'src/ecdsa_base.dart';
-
-// TODO: Export any libraries intended for clients of this package.

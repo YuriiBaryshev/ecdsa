@@ -1,39 +1,25 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
-
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages). 
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages). 
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+ECDSA implementation for Dart
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+1. Key pair generation
+2. Signing messages
+3. Verification of yielded signatures
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+1. Install Dart SDK and Flutter framework.
+2. Install IDE (this was developed using Android studio, but any Dart-supporting will do).
+3. Run command flutter test in project's folder in order to see that every thing is alright (all tests passed).
+
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
-
 ```dart
-const like = 'sample';
+Uint8List message = Uint8List.fromList([0, 1, 2, 3]);
+ECDSA ecdsa = ECDSA(getP256());
+var signature = ecdsa.sign(message);
+//...
+print(ecdsa.verify(message, signature)); //true
 ```
-
-## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+One may refer to [example](./example) folder for more sophisticated use case

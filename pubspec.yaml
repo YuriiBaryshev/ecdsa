@@ -1,13 +1,15 @@
 name: ecdsa
 description: A starting point for Dart libraries or applications.
 version: 1.0.0
-# repository: https://github.com/my_org/my_repo
 
 environment:
   sdk: '>=2.19.6 <3.0.0'
 
-# dependencies:
-#   path: ^1.8.0
+dependencies:
+  elliptic_curves_facade:
+    git: https://github.com/YuriiBaryshev/elliptic_curves_facade.git
+  elliptic: ^0.3.8
+  pointycastle: ^3.7.3
 
 dev_dependencies:
   lints: ^2.0.0
