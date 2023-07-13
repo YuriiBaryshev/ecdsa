@@ -1,16 +1,17 @@
 import 'package:ecdsa/ecdsa.dart';
+import 'package:elliptic/elliptic.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('A group of tests', () {
-    final awesome = Awesome();
+  group('ECDSA tests', () {
+    ECDSA ecdsa = ECDSA();
 
     setUp(() {
       // Additional setup goes here.
     });
 
-    test('First Test', () {
-      expect(awesome.isAwesome, isTrue);
+    test('Secp256k1 is set default', () {
+      expect(ecdsa.ellipticCurveFacade.curve, getSecp256k1());
     });
   });
 }

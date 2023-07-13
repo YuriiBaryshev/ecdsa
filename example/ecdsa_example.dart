@@ -1,6 +1,6 @@
 import 'package:ecdsa/ecdsa.dart';
 
 void main() {
-  var awesome = Awesome();
-  print('awesome: ${awesome.isAwesome}');
+  ECDSA ecdsa = ECDSA();
+  print('${ecdsa.ellipticCurveFacade}');
 }
