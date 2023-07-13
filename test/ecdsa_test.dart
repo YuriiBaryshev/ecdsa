@@ -64,5 +64,32 @@ void main() {
         ecdsa.verify(message, wrongSignature2);
       }, throwsArgumentError);
     });
+
+    test('throws on verification of incorrect signature values', () {
+      var signature = ecdsa.sign(message);
+      Map<String, BigInt> wrongSignature1 = {
+        "s" : signature["s"]!,
+        "r" : BigInt.zero
+      };
+      expect(() {
+        ecdsa.verify(message, wrongSignature1);
+      }, throwsArgumentError);
+
+      Map<String, BigInt> wrongSignature2 = {
+        "r" : signature["r"]!,
+        "s" : BigInt.zero
+      };
+      expect(() {
+        ecdsa.verify(message, wrongSignature2);
+      }, throwsArgumentError);
+
+      Map<String, BigInt> wrongSignature3 = {
+        "r" : signature["r"]!,
+        "s" : ecdsa.ellipticCurveFacade.curve.n
+      };
+      expect(() {
+        ecdsa.verify(message, wrongSignature3);
+      }, throwsArgumentError);
+    });
   });
 }
