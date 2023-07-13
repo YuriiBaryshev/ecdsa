@@ -52,10 +52,12 @@ class ECDSA {
 
   ///Signing message
   ///Mapping/JSON of the following structure is outputted
+  ///```
   ///{
   ///   "r": <something> as BigInt
   ///   "s": <something> as BigInt
   ///}
+  ///```
   Map<String, BigInt> sign(Uint8List message) {
     Map<String, BigInt> output = {
       "r": BigInt.zero,
